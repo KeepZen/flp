@@ -1,0 +1,20 @@
+{
+  "name": "@keepzen/flp",
+  "version": "0.0.2",
+  "description": "Function Light Programe for nodejs",
+  "main": "src/FLP.js",
+  "author": "keep.in.zen",
+  "scripts": {
+    "doc": "npx jsdoc2md src/FLP.js > API.md",
+    "test": "npx jest"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "private": false,
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "jsdoc-to-markdown": "^4.0.1"
+  }
+}
