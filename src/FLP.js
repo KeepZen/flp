@@ -128,11 +128,11 @@ function curry(fn,arity=fn.length){
 /**
 Loose curry a function.
 
-If a function `fn` require 3 argument be curried,
-`c=curry(fn)`, We must do like `c(1)(2)(3)`
-to get result.
+If a function `fn` require 3 argument,
+it be curried `c=curry(fn)`,
+to get result, we must do like that `c(1)(2)(3)`.
 
-Now `lc=looseCurry(fn)`, get some result, we can do like:
+Now `lc=looseCurry(fn)`, get same result, we can do like:
 1. `lc(1,2,3)`
 2. `lc(1,2)(3)`
 3. `lc(1)(2,3)`
