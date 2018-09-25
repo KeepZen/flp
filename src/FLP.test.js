@@ -11,6 +11,7 @@ const {
   combine,
   pipe,
   pipeable,
+  trampoline,
 } = require('./FLP.js');
 
 test(
@@ -173,5 +174,31 @@ test(
     expect(f2.mock.calls[0][0]).toBe(2);
     expect(f3.mock.calls[0][0]).toBe(3);
     expect(f3.mock.calls[1][0]).toBe(4);
+  }
+)
+
+test(
+  "trampoline(ret)",
+  ()=>{
+    function sumFromOneTo(n){
+      let sum =0;
+      while(n>0){
+        sum += n;
+        n--;
+      }
+      return sum;
+    }
+    function sumFromOneTo2(n){
+      function t(ret,n){
+        if(n==0){
+          return ret;
+        }
+        return t.bind(null,ret+n,n-1);
+      }
+      return trampoline(t.bind(null,0,n));
+    }
+    expect(sumFromOneTo(10)).toBe(sumFromOneTo2(10));
+    let t = 1E6;
+    expect(sumFromOneTo(t)).toBe(sumFromOneTo2(t))
   }
 )

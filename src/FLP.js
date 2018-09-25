@@ -225,6 +225,35 @@ function pipeable(fn){
   })(fn);
 }
 
+/**
+Help a function recursion.
+
+Example:
+```js
+function sumFromOneTo(n){
+  function _sum(ret,i){
+    if(i == 0){
+      return ret;
+    }else{
+        //Do some operationes on argumemtes,
+        //but delay to call function.
+      return _sum.bind(null,ret+n,i-1);
+    }
+  }
+  return trampoline(_sum.bind(0,n));
+}
+```
+@arg {function} ret - A function need no argument and return a value
+or return another function need no argument.
+@return {any}
+*/
+function trampoline(ret){
+  while(typeof ret == 'function'){
+    ret = ret();
+  }
+  return ret;
+}
+
 module.exports ={
   unary,
   identity,
@@ -238,4 +267,5 @@ module.exports ={
   combine,
   pipe,
   pipeable,
+  trampoline,
 }

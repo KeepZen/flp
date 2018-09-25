@@ -24,6 +24,7 @@ Some symbol definations:
     * [~combine(...fns)](#module_FLP..combine) ⇒ <code>function</code>
     * [~pipe(...fns)](#module_FLP..pipe) ⇒ <code>function</code>
     * [~pipeable(fn)](#module_FLP..pipeable) ⇒ <code>function</code>
+    * [~trampoline(ret)](#module_FLP..trampoline) ⇒ <code>any</code>
 
 <a name="module_FLP..unary"></a>
 
@@ -199,4 +200,31 @@ Make the function `fn`  pipeable to other functions.
 | Param | Type |
 | --- | --- |
 | fn | <code>function</code> | 
+
+<a name="module_FLP..trampoline"></a>
+
+### FLP~trampoline(ret) ⇒ <code>any</code>
+Help a function recursion.
+
+Example:
+```js
+function sumFromOneTo(n){
+  function _sum(ret,i){
+    if(i == 0){
+      return ret;
+    }else{
+        //Do some operationes on argumemtes,
+        //but delay to call function.
+      return _sum.bind(null,ret+n,i-1);
+    }
+  }
+  return trampoline(_sum.bind(0,n));
+}
+```
+
+**Kind**: inner method of [<code>FLP</code>](#module_FLP)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ret | <code>function</code> | A function need no argument and return a value or return another function need no argument. |
 
