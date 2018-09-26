@@ -13,7 +13,7 @@ const {
   pipeable,
   trampoline,
   tco,
-} = require('./FLP.js');
+} = require('./FP.js');
 
 test(
   "unary(fn)",

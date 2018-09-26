@@ -1,11 +1,11 @@
 {
-  "name": "@keepzen/flp",
-  "version": "0.1.0",
+  "name": "@keepzen/fp",
+  "version": "0.1.1",
   "description": "Function Light Programe for nodejs",
   "main": "src/FLP.js",
   "author": "keep.in.zen",
   "scripts": {
-    "doc": "npx jsdoc2md src/FLP.js > ReadMe.md",
+    "doc": "npx jsdoc2md src/FP.js > ReadMe.md",
     "pub": "mv ~/.npmrc ~/npmrc;yarn publish --access public ; mv ~/npmrc ~/.npmrc",
     "test": "npx jest"
   },
@@ -13,6 +13,7 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "keywords":["FP"],
   "private": false,
   "devDependencies": {
     "jest": "^23.6.0",
