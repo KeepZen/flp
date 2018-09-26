@@ -2,9 +2,9 @@ const {
   unary,
   identity,
   constant,
-  paritial,
+  partial,
   reverseArg,
-  paritialRight,
+  partialRight,
   curry,
   looseCurry,
   uncurry,
@@ -12,6 +12,7 @@ const {
   pipe,
   pipeable,
   trampoline,
+  tco,
 } = require('./FLP.js');
 
 test(
@@ -43,12 +44,12 @@ test(
 )
 
 test(
-  "paritial",
+  "partial",
   ()=>{
     let fn = (a,b,c)=>a+b+c;
-    let p1 = paritial(fn,1);
+    let p1 = partial(fn,1);
     expect(p1(2,3)).toBe(fn(1,2,3));
-    let p2 = paritial(p1,2);
+    let p2 = partial(p1,2);
     expect(p1(2,3)).toBe(p2(3));
   }
 )
@@ -67,10 +68,10 @@ test(
 )
 
 test(
-  "paritialRight(fn)",
+  "partialRight(fn)",
   ()=>{
     let fn =  jest.fn( (a,b,c)=>a+b+c );
-    let p0=paritialRight(fn,3)
+    let p0=partialRight(fn,3)
     expect(typeof p0).toBe('function')
     p0(1,2);
     expect(fn.mock.calls[0][0]).toBe(1);
@@ -177,17 +178,17 @@ test(
   }
 )
 
+function sumFromOneTo(n){
+  let sum =0;
+  while(n>0){
+    sum += n;
+    n--;
+  }
+  return sum;
+}
 test(
   "trampoline(ret)",
   ()=>{
-    function sumFromOneTo(n){
-      let sum =0;
-      while(n>0){
-        sum += n;
-        n--;
-      }
-      return sum;
-    }
     function sumFromOneTo2(n){
       function t(ret,n){
         if(n==0){
@@ -200,5 +201,20 @@ test(
     expect(sumFromOneTo(10)).toBe(sumFromOneTo2(10));
     let t = 1E6;
     expect(sumFromOneTo(t)).toBe(sumFromOneTo2(t))
+  }
+)
+
+test(
+  "tco(functiondefine)",
+  ()=>{
+    function tcoSumFromOneTo(n){
+      const sum=tco((ret,n)=>{
+        if(n == 0) return ret;
+        return sum(ret+n,n-1);
+      });
+      return sum(0,n);
+    }
+    let t = 1E6;
+    expect(sumFromOneTo(t)).toBe(tcoSumFromOneTo(t));
   }
 )
