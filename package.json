@@ -1,6 +1,6 @@
 {
   "name": "@keepzen/fp",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Function Light Programe for nodejs",
   "main": "src/FLP.js",
   "author": "keep.in.zen",
@@ -13,7 +13,9 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "keywords":["FP"],
+  "keywords": [
+    "FP"
+  ],
   "private": false,
   "devDependencies": {
     "jest": "^23.6.0",

@@ -18,8 +18,8 @@ f(anys) => f'.
 @arg {function} fn - A function require n arguments.
 @return {function} - a function just require one argument.
 */
-function unary(fn){
-  return function onlyOneArg(arg){
+function unary(fn) {
+  return function onlyOneArg(arg) {
     return fn(arg);
   };
 }
@@ -30,7 +30,7 @@ any=>any
 @arg {any} v
 @return {any} - the value was passed in.
 */
-function identity(v){
+function identity(v) {
   return v;
 }
 
@@ -41,8 +41,8 @@ any=>f(any)
 @return {function} - a function,
 which always return the passed `v`.
 */
-function constant(v){
-  return function value(){
+function constant(v) {
+  return function value() {
     return v;
   };
 }
@@ -62,8 +62,8 @@ and `fm(1,2,3)` have same mean as
 @arg {Array(any)} presentArgs - Zero or more arguments use to partial `fn`.
 @return {function}
 */
-function partial(fn,...presentArgs){
-  return function paritialed(...restArgs){
+function partial(fn, ...presentArgs) {
+  return function paritialed(...restArgs) {
     return fn(...presentArgs, ...restArgs);
   };
 }
@@ -80,8 +80,8 @@ then 'g(1,2,3) === f(3,2,1)'.
 @arg {function}
 @return {function}
 */
-function reverseArg(fn){
-  return function reverseArged(...args){
+function reverseArg(fn) {
+  return function reverseArged(...args) {
     return fn(...args.reverse())
   }
 }
@@ -97,9 +97,9 @@ then `f(b1,b2,a1,a2,a3)` same as `g(b1,b2)`.
 @arg {Array(any)} presentArgs
 @return {function}
 */
-function partialRight(fn,...presentArgs){
+function partialRight(fn, ...presentArgs) {
   return reverseArg(
-    partial( reverseArg(fn), ...presentArgs.reverse() )
+    partial(reverseArg(fn), ...presentArgs.reverse())
   );
 }
 
@@ -113,13 +113,13 @@ See [Wikipedia About Currying](https://en.wikipedia.org/wiki/Currying)
 @arg {number} arity - How many arguments the `fn` required.
 @return {function}
 */
-function curry(fn,arity=fn.length){
-  return (function nextCurry(totalArgs=[]){
+function curry(fn, arity = fn.length) {
+  return (function nextCurry(totalArgs = []) {
     return function curried(arg) {
-      if(totalArgs.length >= arity-1){
-        return fn(...totalArgs,arg);
-      }else{
-        return nextCurry([...totalArgs,arg]);
+      if (totalArgs.length >= arity - 1) {
+        return fn(...totalArgs, arg);
+      } else {
+        return nextCurry([...totalArgs, arg]);
       }
     };//end curried
   })();
@@ -142,13 +142,13 @@ Now `lc=looseCurry(fn)`, get same result, we can do like:
 @arg {number} arity - How many arguments of `fn` required.
 @return {function}
 */
-function looseCurry(fn,arity=fn.length){
-  return (function nextCurry(totalArgs=[]){
-    return function curried(...presentArgs){
-      if(totalArgs.length + presentArgs.length >= arity){
-        return fn(...totalArgs,...presentArgs);
-      }else{
-        return nextCurry([...totalArgs,...presentArgs]);
+function looseCurry(fn, arity = fn.length) {
+  return (function nextCurry(totalArgs = []) {
+    return function curried(...presentArgs) {
+      if (totalArgs.length + presentArgs.length >= arity) {
+        return fn(...totalArgs, ...presentArgs);
+      } else {
+        return nextCurry([...totalArgs, ...presentArgs]);
       }
     };//end curried
   })()
@@ -161,13 +161,13 @@ Change a curried function to a loose curry function.
 @return {function}
 */
 
-function uncurry(fn){
-  return function uncurryed(...args){
+function uncurry(fn) {
+  return function uncurryed(...args) {
     let ret = fn;
-    for(let arg of args){
-      if(typeof ret == 'function'){
+    for (let arg of args) {
+      if (typeof ret == 'function') {
         ret = ret(arg);
-      }else{
+      } else {
         return ret;
       }
     }
@@ -181,16 +181,16 @@ Combine the input functions to a new function.
 @return {function} - The combined function.
 */
 function combine(...fns) {
-  if(fns.length == 0){
+  if (fns.length == 0) {
     return;
   }
-  return function combined(...args){
+  return function combined(...args) {
     let ret;
-    let last = fns.length-1;
-    for(let i=last; i>=0 ;--i){
-      if(i == last){
+    let last = fns.length - 1;
+    for (let i = last; i >= 0; --i) {
+      if (i == last) {
         ret = fns[i](...args);
-      }else{
+      } else {
         ret = fns[i](ret);
       }
     }
@@ -204,7 +204,7 @@ Pipe functions.
 @arg {Array(function)} fns
 @return {function}
 */
-function pipe(...fns){
+function pipe(...fns) {
   return combine(...fns.reverse());
 }
 
@@ -214,11 +214,11 @@ Make the function `fn`  pipeable to other functions.
 @return {function} - A function have a property `.pipe(...fns)`.
 */
 
-function pipeable(fn){
-  return (function makeCanPipe(...fns){
+function pipeable(fn) {
+  return (function makeCanPipe(...fns) {
     const ret = pipe(...fns);
-    ret.pipe=function pipe(...fs){
-      return makeCanPipe(...[...fns,...fs]);
+    ret.pipe = function pipe(...fs) {
+      return makeCanPipe(...[...fns, ...fs]);
     };
     return ret;
   })(fn);
@@ -246,8 +246,8 @@ function sumFromOneTo(n){
 or return another function need no argument.
 @return {any}
 */
-function trampoline(ret){
-  while(typeof ret == 'function'){
+function trampoline(ret) {
+  while (typeof ret == 'function') {
     ret = ret();
   }
   return ret;
@@ -275,25 +275,45 @@ Klein bottle is easy.
 @arg {function} f - The function you defined.
 @return {function} - A function may confuse you where is entrance and exit.
 */
-function tco(f){
-  let o=Object.create(null);
-  let active=false;
-  return function klein_bottle(){
+function tco(f) {
+  let o = Object.create(null);
+  let active = false;
+  return function klein_bottle() {
     o.args = arguments;
-    if(active == false){
+    if (active == false) {
       active = true;
       let value;
-      while(o.args){
-        let args = o.args ;
+      while (o.args) {
+        let args = o.args;
         delete o.args;
-        value=f(...args);
+        value = f(...args);
       }
       return value;
     }
   }
 }
 
-module.exports ={
+/**
+ * Select element from `array` cause by `fun`.
+ *
+ * @arg {Array} array - the Array you want to select from.
+ * @arg {function} fun - `(a,index)=>boolean`;
+ * @returns {Array}
+ */
+const select = Function.prototype.call.bind(Array.prototype.filter);
+/**
+ * If the param function `fun()` return a true,
+ * the element will filter out from result.
+ *
+ * @arg {Array} array - the Array you want to select from.
+ * @arg {function} fun - `(a,option)=>boolean`
+ * @returns {Array}
+ */
+function reject(array, fun) {
+  return select(array, (a, b) => !fun(a, b));
+}
+
+module.exports = {
   unary,
   identity,
   constant,
@@ -308,4 +328,6 @@ module.exports ={
   pipeable,
   trampoline,
   tco,
+  select,
+  reject,
 }

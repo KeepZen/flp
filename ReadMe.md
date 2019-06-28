@@ -1,3 +1,4 @@
+D:\Learn\fp\node_modules\jsdoc-to-markdown\bin\cli.js
 <a name="module_FP"></a>
 
 ## FP
@@ -12,6 +13,7 @@ Some symbol definitions:
 
 
 * [FP](#module_FP)
+    * [~select](#module_FP..select) ⇒ <code>Array</code>
     * [~unary(fn)](#module_FP..unary) ⇒ <code>function</code>
     * [~identity(v)](#module_FP..identity) ⇒ <code>any</code>
     * [~constant(v)](#module_FP..constant) ⇒ <code>function</code>
@@ -26,6 +28,19 @@ Some symbol definitions:
     * [~pipeable(fn)](#module_FP..pipeable) ⇒ <code>function</code>
     * [~trampoline(ret)](#module_FP..trampoline) ⇒ <code>any</code>
     * [~tco(f)](#module_FP..tco) ⇒ <code>function</code>
+    * [~reject(array, fun)](#module_FP..reject) ⇒ <code>Array</code>
+
+<a name="module_FP..select"></a>
+
+### FP~select ⇒ <code>Array</code>
+Select element from `array` cause by `fun`.
+
+**Kind**: inner constant of [<code>FP</code>](#module_FP)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>Array</code> | the Array you want to select from. |
+| fun | <code>function</code> | `(a,index)=>boolean`; |
 
 <a name="module_FP..unary"></a>
 
@@ -255,4 +270,17 @@ Klein bottle is easy.
 | Param | Type | Description |
 | --- | --- | --- |
 | f | <code>function</code> | The function you defined. |
+
+<a name="module_FP..reject"></a>
+
+### FP~reject(array, fun) ⇒ <code>Array</code>
+If the param function `fun()` return a true,
+the array item was filtered out, like you
+
+**Kind**: inner method of [<code>FP</code>](#module_FP)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>Array</code> | the Array you want to select from. |
+| fun | <code>function</code> | `(a,option)=>boolean` |
 
