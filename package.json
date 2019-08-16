@@ -1,6 +1,6 @@
 {
   "name": "@keepzen/fp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Function Light Programe for nodejs",
   "main": "index.js",
   "author": "keep.in.zen",
