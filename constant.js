@@ -14,12 +14,12 @@ const deepCopy = require('./deep-copy');
  * assert.equal(obj.a,1);
  * objc.add_a_and_b();
  * assert.equal(objc.c,undefined);
- * @returns {any} An immutable value.
+ * @returns {any} An constant value.
  */
-const immute = (value) => {
+const constant = (value) => {
   if (value instanceof Object && value != null) {
     value = deepCopy(value, { freeze: true });
   }
   return value;
 }
-module.exports = immute;
+module.exports = constant;

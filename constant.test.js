@@ -1,10 +1,10 @@
-const immute = require('./immute');
+const constant = require('./constant');
 test("imute(obj)", () => {
   let obj = { a: 1, b: 2 }
   obj.add_a_and_b = function () {
     return this.c = this.a + this.b;
   }
-  let objc = immute(obj);
+  let objc = constant(obj);
   objc.a++;
   expect(obj.a).toBe(1);
   delete objc.a;

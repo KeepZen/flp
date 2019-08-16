@@ -6,7 +6,7 @@ const {
 } = require('./compose');
 const m2f = require('./m2f');
 const deepCopy = require('./deep-copy');
-const constant = require('./immute');
+const constant = require('./constant');
 const Pipeable = require('./pipeable');
 const not = require('./not');
 const { selectWith, rejectWith } = require('./array');
