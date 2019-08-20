@@ -1,9 +1,10 @@
 {
   "name": "@keepzen/fp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Function Light Programe for nodejs",
   "main": "index.js",
-  "author": "keep.in.zen",
+  "author": "keep.in.zen@pm.me",
+  "homepage": "https://github.com/keepzen/fp",
   "scripts": {
     "doc": "npx documentation build -f md> ReadMe.md",
     "test": "npx jest"
@@ -16,9 +17,5 @@
     "FP"
   ],
   "private": false,
-  "devDependencies": {
-    "jest": "^23.6.0",
-    "jsdoc-to-markdown": "^4.0.1"
-  },
   "repository": "git@github.com:KeepZen/fp.git"
 }
