@@ -10,6 +10,20 @@ const constant = require('./constant');
 const Pipeable = require('./pipeable');
 const not = require('./not');
 const { selectWith, rejectWith } = require('./array');
+
+/**
+ * The Identfy function.
+ * @param {any} v 
+ * @return {any}
+ */
+const id = v => v;
+/**
+ * Convert `fn` to a unary function.
+ * @param {Function} fn 
+ * @return {Function}
+ */
+const unary = fun => arg => fun(arg);
+
 module.exports = {
   PlaceHolder,
   binding,
@@ -22,4 +36,6 @@ module.exports = {
   not,
   selectWith,
   rejectWith,
+  id,
+  unary,
 }
