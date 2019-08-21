@@ -16,7 +16,7 @@ const toString = require('./_toString');
  * The return function do same as `md`, but add `this` as the first parameter.
  * @example
  * const assert = require('assert');
- * const {PlaceHolder:_,binding,m2f} = require('@keepzen/fp.js');
+ * const {PlaceHolder:_,binding,m2f} = require('@keepzen/fp');
  * const sortWithZ = binding(m2f(Array.sort),_,(a,b)=>a.z-b.z);
  * let arr=[{a:1,z:2},{b:2,z:1},{c:2,z:4}];
  * sourtWithZ(arr);
