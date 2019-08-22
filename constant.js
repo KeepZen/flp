@@ -7,7 +7,7 @@ const deepCopy = require('./deep-copy');
  * If you just want get a immutable copy, just use
  * `deeopCopy(value,{freeze:true})`.
  * @param {any} value 
- * @return {Function} : ()=>deepCopyOfValue
+ * @return {Function} : ()=>freezenDeepCopyOfValue
  */
 const constant = (value) => {
   const copy = deepCopy(value, { freeze: true });

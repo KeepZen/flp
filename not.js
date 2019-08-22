@@ -9,7 +9,7 @@
 const not = fun => (...args) => {
   let v = fun(...args)
   switch (true) {
-    case v instanceof Number:
+    case typeof v == 'number' || v instanceof Number:
       return -v;
     default:
       return !v;

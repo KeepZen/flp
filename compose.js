@@ -1,12 +1,12 @@
 const toString = require('./_toString');
 /**
- * Compose functions `fns` to make a new one.
+ * Compose functions `fns` to make a new function.
  *
  * $$
  * f \circ g = f(g(x))
  * $$
  * Read as "f of g" or "f after g".
- * Means `g` first to run, after get the result of `g`, then `f` use the result as input to run.
+ * Means `f` after `g` to run, or `f` is function of value of `g`.
  * @param  {...Function} fns
  * The functions you want to compose them to be one.
  * @returns {Function}
@@ -37,7 +37,7 @@ const compose = (...fns) => {
  * const assert = require('assert');
  * const first=(a,b)=>a+b
  * const second=a=>a*3;
- * const all = flow(first,second);
+ * const all = pipe(first,second);
  * assert.equal(all.length,2);
  * assert.equal(all(1,2),(1+2)*3);
  */

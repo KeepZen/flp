@@ -37,6 +37,7 @@ const orderWith = (compare = (a, b) => a - b, { asc = true } = {}) => array => m
 /**
  * Reverse the `array` get a new reversed array.
  * @param {Array} array 
+ * @returns {Array}
  * @example 
  * const array = [1,2,3]
  * const reversed = reverse(array);
@@ -46,9 +47,10 @@ const orderWith = (compare = (a, b) => a - b, { asc = true } = {}) => array => m
  */
 const reverse = array => m2f([].reverse)([...array]);
 /**
- * Zip arrays `a1` and `a2` to a array of array.
+ * Zip arrays `a1` and `a2` to an array of array.
  * @param {Array} a1 
  * @param {Array} a2 
+ * @returns {Array} Array<Array(2)>
  * @example
  * const array1 = [1,2,3,4];
  * const array2=['one','two','three'];

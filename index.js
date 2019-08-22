@@ -12,14 +12,14 @@ const not = require('./not');
 const { selectWith, rejectWith } = require('./array');
 
 /**
- * The Identfy function.
+ * The idempotent function.
  * @param {any} v 
- * @return {any}
+ * @return {any} v.
  */
 const id = v => v;
 /**
- * Convert `fn` to a unary function.
- * @param {Function} fn 
+ * Convert `fun` to an unary function.
+ * @param {Function} fun 
  * @return {Function}
  */
 const unary = fun => arg => fun(arg);
