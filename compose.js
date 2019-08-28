@@ -2,9 +2,7 @@ const toString = require('./_toString');
 /**
  * Compose functions `fns` to make a new function.
  *
- * $$
- * f \circ g = f(g(x))
- * $$
+ * <div>f &compfn; g = f(g(x))</div>
  * Read as "f of g" or "f after g".
  * Means `f` after `g` to run, or `f` is function of value of `g`.
  * @param  {...Function} fns

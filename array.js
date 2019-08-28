@@ -32,7 +32,11 @@ const rejectWith = predicate => binding(m2f([].filter), _, not(predicate));
  * @param {Function} compare :`(a,b)=>Boolean`
  * @return {Function} order:(array)=>array
  */
-const orderWith = (compare = (a, b) => a - b, { asc = true } = {}) => array => m2f([].sort)([...array], asc ? compare : not(compare));
+const orderWith = (
+  compare = (a, b) => a - b,
+  { asc = true } = {}
+) => array => m2f([].sort)([...array], asc ? compare : not(compare))
+
 
 /**
  * Reverse the `array` get a new reversed array.
@@ -48,8 +52,8 @@ const orderWith = (compare = (a, b) => a - b, { asc = true } = {}) => array => m
 const reverse = array => m2f([].reverse)([...array]);
 /**
  * Zip arrays `a1` and `a2` to an array of array.
- * @param {Array} a1 
- * @param {Array} a2 
+ * @param {Array} aIterable 
+ * @param {Array} arrayLikly 
  * @returns {Array} Array<Array(2)>
  * @example
  * const array1 = [1,2,3,4];
@@ -68,11 +72,42 @@ const reverse = array => m2f([].reverse)([...array]);
  * console.log(str_num[2][1] === 3);
  * console.log(str_num.length === array2.length);
  */
-const zip = (a1, a2) => a1.map((ele, i) => [ele, a2[i]]);
+const zip = (aIterable, arrayLikly) => [...aIterable].map((ele, i) => [ele, arrayLikly[i]]);
+/**
+ * Check is `every` element in `iteratble` satisfy contiontion `fun`.
+ * 
+ * If `iterable` is empty, return `true`. See more at 
+ * [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every#Description);
+ * @param {Function} fun :`(element[,index,array])`
+ * @param {Iterable} iterable 
+ * @return boolean
+ */
+const every = (fun, iterable) => [...iterable].every(fun);
+/**
+ * Check is `all` element in `iteratble` satisfy contiontion `fun`.
+ * 
+ * This is similarity as [every](#every) but if `iterable` is empty, return `false`.
+ * @param {Function} fun :`(element[,index,array])`
+ * @param {Iterable} iteratable 
+ */
+const all = (fun, iteratable, ) => {
+  iteratable = [...iteratable];
+  return iteratable.length > 0 && iteratable.every(fun);
+}
+/**
+ * Check is `some` element in `iterable` satisfy contiontion `fun`.
+ * @param {Function} fun :`(element[,index,array])`
+ * @param {Iterable} iterable 
+ */
+const some = (fun, iterable) => [...iterable].some(fun);
 module.exports = {
   selectWith,
   rejectWith,
   orderWith,
   reverse,
   zip,
+  all,
+  every,
+  some,
+  any: some,
 }

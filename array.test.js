@@ -4,6 +4,9 @@ const {
   orderWith,
   reverse,
   zip,
+  all,
+  every,
+  any,
 } = require('./array');
 let array = [1, 2, 3, 4];
 let arrayb = [5, 6, 7, 8];
@@ -60,4 +63,26 @@ test('reverse(array)', () => {
   let array = [1, 2, 3, 4];
   expect(reverse(array)).toMatchObject([4, 3, 2, 1]);
   console.log(reverse2(array));
+})
+
+const positive = a => a > 0;
+test('all(funp,arrayLike)', () => {
+  expect(all(positive, [1, 2, 3, 4])).toBe(true);
+  expect(all(positive, [1, 2, -1, 3, 4])).toBe(false)
+  expect(all(positive, [])).toBe(false)
+})
+
+test('every(funp,arrayLikly)', () => {
+  expect(every(positive, [1, 2, 3, 4])).toBe(true);
+  expect(every(positive, [1, 2, -1, 3, 4])).toBe(false)
+  expect(every(positive, [])).toBe(true)
+})
+
+test('any(funp,arrayLikly)', () => {
+  expect(any(positive, [-1, -2, -3, 4])).toBe(true);
+  expect(any(positive, [-1, -2, -3, -4])).toBe(false);
+  expect(any(positive, [])).toBe(false);
+  expect(any(positive, [0])).toBe(false);
+  expect(any(positive, [+0])).toBe(false);
+  expect(any(positive, [-0])).toBe(false);
 })
