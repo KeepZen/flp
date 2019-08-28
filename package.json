@@ -1,12 +1,12 @@
 {
   "name": "@keepzen/fp",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Function Light Programe for nodejs",
   "main": "index.js",
   "author": "keep.in.zen@pm.me",
   "homepage": "https://github.com/keepzen/fp",
   "scripts": {
-    "doc": "npx documentation build -f md> ReadMe.md",
+    "doc": "npx documentation readme -s API index.js",
     "test": "npx jest"
   },
   "license": "MIT",
