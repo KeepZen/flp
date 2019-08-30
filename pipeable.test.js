@@ -17,3 +17,15 @@ test('Pipeable(v)', () => {
   expect(c == 2 + 1).toBe(true);
   expect(fn).toHaveBeenCalledWith(2, 1, 3);
 })
+
+test('Pipeable(promise)', (done) => {
+  let z = Pipeable(Promise.resolve(1));
+  expect(z.valueOf()).toBeInstanceOf(Promise);
+  let fn = jest.fn((n) => console.log(n));
+  let ret = z.pipe(fn);
+  expect(ret.valueOf()).toBeInstanceOf(Promise);
+  ret.valueOf().then(() => {
+    expect(fn).toHaveBeenCalledWith(1);
+    done();
+  })
+})

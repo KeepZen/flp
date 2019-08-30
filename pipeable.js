@@ -1,15 +1,27 @@
 const _ = require('./placeHolder');
 const toString = require('./_toString');
-
+const _call = (fun, value, index, paramers) => {
+  if (index != -1) {
+    paramers[index] = value;
+  } else {
+    paramers.unshift(value);
+  }
+  return fun(...paramers);
+}
 const _pipe = v => (fun, ...paramers) => {
   const index = paramers.findIndex(arg => arg === _);
-  if (index != -1) {
-    paramers[index] = v.valueOf();
-  } else {
-    paramers.unshift(v.valueOf());
+  const valueOf = () => {
+    const valueOrPromise = v.valueOf();
+    if (valueOrPromise instanceof Promise) {
+      return valueOrPromise.then(
+        value => _call(fun, value, index, paramers)
+      );
+    } else {
+      return _call(fun, valueOrPromise, index, paramers);
+    }
   }
   const ret = Pipeable();
-  ret.valueOf = () => fun(...paramers);
+  ret.valueOf = valueOf;
   return ret;
 }
 

@@ -1,0 +1,299 @@
+#+OPTIONS: TOC:null ^:{}
+[[https://img.shields.io/npm/v/@keepzen/fp.svg]]
+[[https://img.shields.io/npm/dm/@keepzen/fp.svg]]
+[[https://img.shields.io/npm/dt/@keepzen/fp.svg]]
+
+#+TOC: headline 1
+* id: ~(any)=>any~
+
+The idempotent function.
+
+** Parameters
+
+-  =v= *any*
+
+Returns *any* the parameter =v=.
+
+* unary: ~(fun)=>Function~
+
+Convert ~fun~ to an unary function.
+
+** Parameters
+
+-   ~fun~ 
+Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* 
+
+* PlaceHolder: ~Symbol~
+
+This is a ~symbol~.
+
+Export as ~PlaceHolder~,
+but you can rename it as you like.
+
+It can use as argument of ~binding~ and ~pipeable.pipe~.
+
+** Examples
+#+BEGIN_SRC js
+const {PlaceHolder:_} = require('@keepzen/fp');
+#+END_SRC
+
+* binding: ~(fun,...args)=>Function~
+
+Biding function ~fun~ with arguments fellow it.
+
+** Parameters
+
+-   ~fun~ *Function* This is the function whos parameters you want to bind.
+-   ~args~ ...*any* The values you bind to the parameters of ~fun~.
+
+Return Function.
+
+The length of return function is ~fun.length - args.length~,
+if ~args~ are all normal values, when ~args~ includes placeholder ~_~,
+the length will add the count of placeholders.
+** Examples
+#+include: "./binding.test.js" src js
+** bindidng.placeHolder: ~Symbol~
+
+The place holder that can be use zero or manny times as element of ~args~ in ~binding(fun,...args)~.
+
+* compose: ~(...funs)=>Function~
+
+Compose functions ~fns~ to make a new function.
+
+<div>f &compfn; g = f(g(x))</div>
+Read as "f of g" or "f after g".
+Means ~f~ after ~g~ to run, or ~f~ is function of value of ~g~.
+
+** Parameters
+
+-   ~fns~ *Function* The functions you want to compose them to be one.
+
+Returns *Function* 
+
+** Examples
+#+include: "./compose.test.js" src js :lines "1-14"
+
+* pipe: ~(...funs)=>Function~
+
+~pipe~ is like the ~compose~ but reverse the execute order.
+It is differtne with ~Pipeable~. ~Pipeable~ make a functor.
+
+** Parameters
+
+-   ~fns~ *...Function*
+
+Returns *Function* 
+
+** Examples
+#+include "./compose.test.js" src js :lines "15"
+* m2f: ~(method)=>Function~
+
+Convert a method to a function.
+
+If you have a function ~fn~ you can attch it to a object ~obj~ like
+~obj.fn=fn~, so the ~this~ in ~fn~ now is ~obj~.
+
+But how do you do if you want use a method as a function?
+Like sort arrays with a fixed way?
+
+~m2f~ is use to help you for this.
+
+** Parameters
+
+-   ~method~ *Function* The method you want covert to a function.
+
+Returns *Function*.
+
+The return function do same as ~md~, but add ~this~ as the first parameter.
+
+** Examples
+#+include: "./m2f.test.js" src js
+
+* deepCopy: ~(any[,{freeze}])=>any~
+
+Deep copy the ~value~.
+
+** Parameters
+
+-   ~v~ *any*
+-   ~$1~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object][Object]]*  (optional, default ~{}~)
+    -   ~$1.freeze~   (optional, default ~false~)
+
+Returns a new deep Copyed Object.
+** Examples
+#+include: "./deep-copy.test.js" src js 
+* constant: ~(any)=>()=>any~
+
+Give a value, get a function, which always return freezen deep copy of 
+the given value.
+
+If you just want get a immutable copy, just use
+~deepCopy(value,{freeze:true})~.
+
+** Parameters
+
+-   ~value~ *any*
+
+Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* : ()=>freezenDeepCopyOfValue
+
+* Pipeable
+
+Make a functor that can pipe the ~value~ to other function.
+The return ~functor~ have fellow attributes:
+
+-   ~valueOf~: ( )=>any
+-   ~pipe~: (fun,...params)=>Pipeable 
+-   ~map~: alias of ~pipe~
+
+** Parameters
+
+-   ~value~ *any*
+
+Returns **Functor** The ~functor~.
+** Examples
+#+include: "./pipeable.test.js" src js
+
+
+** Pipeable.of: ~(any)=>Pipeable~
+
+Alias of ~Pipeable~ make this is more like factor.
+
+** Pipeable.placeHolder: ~Symbol~
+
+The place holder of ~pipeable.valueOf()~, use as an argument of ~pipeable.bind~/~pipeable.map~.
+
+The ~arguments~ of ~pipeable.bind~/~pipeable.map~ can include zero or one place holder.
+If there is no place holder, the ~pipeable.valueOf()~ will be the first argument of ~fun~.
+
+* not: ~not(fn)=>Function~ 
+
+Negative ~fun~.
+
+If ~fun~ is a predicater, return a new negative predicater.
+If ~fun~ is a compare function, return the negative compare function.
+
+** Parameters
+
+-   ~fun~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* :~(v,...args)=>Boolean|Number~
+
+Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* other_fun: ~(v,...args)=>Boolean|Number~
+
+** Examples
+#+include: "./not.test.js" src js
+* selectWith: ~predicate=>array=>Array~
+
+select some array with ~predicate~.
+
+Support there is an ~array~ include value ~v~, and ~predicate(v)~ is true,
+then ~select(array)~ will include ~v~.
+
+** Parameters
+
+-   ~predicate~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* (v,index)=>Boolean;
+
+Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* select: (array)=>array
+** Examples
+#+include: "./array.test.js" src js :lines "11-18"
+* rejectWith: ~predicate=>array=>Array~
+
+Reject some array with ~predicate~.
+
+Support there is an ~array~ include value ~v~,and ~predicate(v)~ is true,
+then ~reject(array)~ will **not** include ~v~.
+
+** Parameters
+
+-   ~predicate~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* : (v,index)=>Boolean;
+
+Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* reject:(array)=>array
+#+include: "./array.test.js" src js :lines "20-25"
+* orderWith: ~(compare[,{asc}])=>array=>Array
+
+Order a array with a ~compare~ function.
+When ~asc~ is ~true~, sort value in ascending order else in descending.
+
+For ~compare(a,b)~, in asc order,
+if you want ~a~ in front of ~b~, return a negative number; 
+if your want ~b~ in front of ~a~ return a positive number;
+else you do not care which first return zero.
+
+** Parameters
+
+-   ~compare~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* :~(a,b)=>Boolean~ (optional, default ~(a,b)=>a-b~)
+-   ~$1~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object][Object]]*  (optional, default ~{}~)
+    -   ~$1.asc~   (optional, default ~true~)
+
+Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* order:(array)=>array
+** Examples
+#+include: "array.test.js" src js :lines "26-44"
+* reverse: ~(array)=>Array~
+
+Get a reversed *new* the array from =array=.
+
+** Parameters
+
+-   ~array~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array][Array]]* 
+
+Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array][Array]]* 
+*** Examples
+#+include: "./array.test.js" src js :lines "53-58"
+
+
+* zip: ~(aIterable,arrayLikly)=>Array<Array(2)>~
+
+Zip arrays ~a1~ and ~a2~ to an array of array.
+
+** Parameters
+
+-   ~aIterable~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array][Array]]* 
+-   ~arrayLikly~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array][Array]]* 
+
+Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array][Array]]* Array&lt;Array(2)>
+** Examples
+#+include: "./array.test.js" src js :lines "45-52"
+
+* every: ~(fun,iterable)=>boolean~
+
+Check is ~every~ element in ~iteratble~ satisfy contiontion ~fun~.
+
+If ~iterable~ is empty, return ~true~. See more at 
+[here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every*Description);
+
+** Parameters
+
+-   ~fun~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* :~(element[,index,array])~
+-   ~iterable~ **Iterable** 
+
+Returns **any** boolean
+
+** Examples
+#+include: "./array.test.js" src js :lines "66-71"
+* all: ~(fun,iterable)=>boolean~
+
+Check is ~all~ element in ~iteratble~ satisfy contiontion ~fun~.
+
+This is similarity as [every](#every) but if ~iterable~ is empty, return ~false~.
+
+** Parameters
+
+-   ~fun~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* :~(element[,index,array])~
+-   ~iteratable~ **Iterable** 
+** Examples
+#+include: "./array.test.js" src js :lines "59-65"
+* every: ~(fun,iterable)=>boolean~
+Similarity as [[=all=]], but if =iterable= is empty, return ~true~.
+
+* any: ~(fun,iterable)=>boolean~
+
+Check is ~some~ element in ~iterable~ satisfy contiontion ~fun~.
+
+** Parameters
+
+-   ~fun~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* :~(element[,index,array])~
+-   ~iterable~ **Iterable** 
+#+include: "./array.test.js" src js :lines "72-80"
+
+* some: ~(fun,iterable)=>boaolean~
+Alias of [[=any=]].
+

@@ -38,10 +38,6 @@ function _deepCopy(v, haveCopyedContainer, freeze = false, ) {
   }
 }
 
-/**
- * Deep copy the `value`.
- * @param {any} v
- */
 function deepCopy(v, { freeze = false } = {}) {
   return _deepCopy(v, new Map(), freeze);
 }

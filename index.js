@@ -11,17 +11,7 @@ const Pipeable = require('./pipeable');
 const not = require('./not');
 const { selectWith, rejectWith } = require('./array');
 
-/**
- * The idempotent function.
- * @param {any} v 
- * @return {any} v.
- */
 const id = v => v;
-/**
- * Convert `fun` to an unary function.
- * @param {Function} fun 
- * @return {Function}
- */
 const unary = fun => arg => fun(arg);
 
 module.exports = {

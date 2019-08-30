@@ -50,19 +50,10 @@ test('zip(a1,a2)', () => {
   expect(zip(a2, a1)).toMatchObject([['one', 1], ['two', 2], ['three', 3]]);
 })
 
-function reverse_help([ele, ...rest], ret) {
-  if (ele == undefined) {
-    return ret;
-  }
-  return reverse_help(rest, [ele, ...ret]);
-}
-function reverse2(array) {
-  return reverse_help(array, []);
-}
 test('reverse(array)', () => {
   let array = [1, 2, 3, 4];
   expect(reverse(array)).toMatchObject([4, 3, 2, 1]);
-  console.log(reverse2(array));
+  expect(array).toMatchObject([1, 2, 3, 4]);
 })
 
 const positive = a => a > 0;
