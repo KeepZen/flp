@@ -88,7 +88,7 @@ It is differtne with ~Pipeable~. ~Pipeable~ make a functor.
 Returns *Function* 
 
 ** Examples
-#+include "./compose.test.js" src js :lines "15"
+#+include: "./compose.test.js" src js :lines "15"
 * m2f: ~(method)=>Function~
 
 Convert a method to a function.
@@ -163,9 +163,9 @@ Alias of ~Pipeable~ make this is more like factor.
 
 ** Pipeable.placeHolder: ~Symbol~
 
-The place holder of ~pipeable.valueOf()~, use as an argument of ~pipeable.bind~/~pipeable.map~.
+The place holder of ~pipeable.valueOf()~, use as an argument of ~pipeable.pipe/pipeable.map~.
 
-The ~arguments~ of ~pipeable.bind~/~pipeable.map~ can include zero or one place holder.
+The ~arguments~ of ~pipeable.pipe/pipeable.map~ can include zero or one place holder.
 If there is no place holder, the ~pipeable.valueOf()~ will be the first argument of ~fun~.
 
 * not: ~not(fn)=>Function~ 
@@ -241,7 +241,6 @@ Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Ob
 *** Examples
 #+include: "./array.test.js" src js :lines "53-58"
 
-
 * zip: ~(aIterable,arrayLikly)=>Array<Array(2)>~
 
 Zip arrays ~a1~ and ~a2~ to an array of array.
@@ -279,7 +278,7 @@ This is similarity as [every](#every) but if ~iterable~ is empty, return ~false~
 
 ** Parameters
 
--   ~fun~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* :~(element[,index,array])~
+-   ~fun~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* : ~(element[,index,array])=>boolean~
 -   ~iteratable~ **Iterable** 
 ** Examples
 #+include: "./array.test.js" src js :lines "59-65"
@@ -292,8 +291,10 @@ Check is ~some~ element in ~iterable~ satisfy contiontion ~fun~.
 
 ** Parameters
 
--   ~fun~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* :~(element[,index,array])~
+-   ~fun~ *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* : ~(element[,index,array])=>boolean~
 -   ~iterable~ **Iterable** 
+
+** Examples
 #+include: "./array.test.js" src js :lines "72-80"
 
 * some: ~(fun,iterable)=>boaolean~

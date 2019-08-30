@@ -21,11 +21,11 @@ test('Pipeable(v)', () => {
 test('Pipeable(promise)', (done) => {
   let z = Pipeable(Promise.resolve(1));
   expect(z.valueOf()).toBeInstanceOf(Promise);
-  let fn = jest.fn((n) => console.log(n));
+  let fn = jest.fn(n => n + 1);
   let ret = z.pipe(fn);
   expect(ret.valueOf()).toBeInstanceOf(Promise);
-  ret.valueOf().then(() => {
+  ret.then(n => {
     expect(fn).toHaveBeenCalledWith(1);
-    done();
-  })
+    expect(n).toBe(2)
+  }).then(done, done);
 })
