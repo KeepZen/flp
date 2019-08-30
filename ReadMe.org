@@ -1,9 +1,11 @@
-#+OPTIONS: TOC:null ^:{}
+#+OPTIONS: TOC:nil ^:{}
+
 [[https://img.shields.io/npm/v/@keepzen/fp.svg]]
 [[https://img.shields.io/npm/dm/@keepzen/fp.svg]]
 [[https://img.shields.io/npm/dt/@keepzen/fp.svg]]
 
-#+TOC: headline 1
+#+TOC: headlines 1
+
 * id: ~(any)=>any~
 
 The idempotent function.
