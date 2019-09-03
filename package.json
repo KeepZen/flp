@@ -1,6 +1,6 @@
 {
   "name": "@keepzen/fp",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Function Light Programe for nodejs",
   "main": "index.js",
   "author": "keep.in.zen@pm.me",
@@ -17,5 +17,8 @@
     "FP"
   ],
   "private": false,
-  "repository": "git@github.com:KeepZen/fp.git"
+  "repository": "git@github.com:KeepZen/fp.git",
+  "dependencies": {
+    "@keepzen/pipe.js": "^2.0.1"
+  }
 }
