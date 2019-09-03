@@ -1,2 +1,4 @@
 ReadMe.md
 *~
+node_modules/
+yarn.lock

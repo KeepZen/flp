@@ -25,20 +25,6 @@ Convert ~fun~ to an unary function.
 -   ~fun~ 
 Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* 
 
-* PlaceHolder: ~Symbol~
-
-This is a ~symbol~.
-
-Export as ~PlaceHolder~,
-but you can rename it as you like.
-
-It can use as argument of ~binding~ and ~pipeable.pipe~.
-
-** Examples
-#+BEGIN_SRC js
-const {PlaceHolder:_} = require('@keepzen/fp');
-#+END_SRC
-
 * binding: ~(fun,...args)=>Function~
 
 Biding function ~fun~ with arguments fellow it.
@@ -79,7 +65,7 @@ Returns *Function*
 * pipe: ~(...funs)=>Function~
 
 ~pipe~ is like the ~compose~ but reverse the execute order.
-It is differtne with ~Pipeable~. ~Pipeable~ make a functor.
+It is differtne with ~pipable~. ~pipable~ make a functor.
 
 ** Parameters
 
@@ -139,34 +125,14 @@ If you just want get a immutable copy, just use
 
 Returns *[[https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function][Function]]* : ()=>freezenDeepCopyOfValue
 
-* Pipeable
+* Pipable
 
-Make a functor that can pipe the ~value~ to other function.
-The return ~functor~ have fellow attributes:
-
--   ~valueOf~: ( )=>any
--   ~pipe~: (fun,...params)=>Pipeable 
--   ~map~: alias of ~pipe~
-
-** Parameters
-
--   ~value~ *any*
-
-Returns **Functor** The ~functor~.
-** Examples
-#+include: "./pipeable.test.js" src js
+*Note*:This is the package of =@keepzen/pipe.js=, and in package of =@keepzen/fp= rexport
+as =Pipable=. So the snippets in this section, =Pipe=, =pipe=, =from=, and ~-~ 
+are all in namespace of =Pipable=.
 
 
-** Pipeable.of: ~(any)=>Pipeable~
-
-Alias of ~Pipeable~ make this is more like factor.
-
-** Pipeable.placeHolder: ~Symbol~
-
-The place holder of ~pipeable.valueOf()~, use as an argument of ~pipeable.pipe/pipeable.map~.
-
-The ~arguments~ of ~pipeable.pipe/pipeable.map~ can include zero or one place holder.
-If there is no place holder, the ~pipeable.valueOf()~ will be the first argument of ~fun~.
+#+include: "node_modules/@keepzen/pipe.js/ReadMe.org" :lines "8-"
 
 * not: ~not(fn)=>Function~ 
 
